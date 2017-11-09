@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ItemForm from './ItemForm';
+import ItemList from './ItemList';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        {
+          name: "Cider",
+          price: "5"
+        },
+        {
+          name: "eggs",
+          price: "3"
+        },
+        {
+          name: "fancy cheese",
+          price: "7"
+        }
+      ]
+    };
+  }
   render() {
+
+    const itemLists = this.state.items.map((item, index) => (
+      <ItemList key={item.name} item={item} onDelete = {() => this.removeItem(index)}/>
+    ));
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">My Awesome Shopping List</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="main_list">
+          {itemLists}
+          <ItemForm onSubmit={this.addContact.bind(this)}/>
+        </div>
       </div>
     );
   }
